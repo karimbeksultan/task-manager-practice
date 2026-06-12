@@ -59,7 +59,7 @@ button {
 
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem;
   margin-bottom: 1.25rem;
 }
@@ -168,6 +168,8 @@ textarea {
 
 .primary-button,
 .ghost-button,
+.clear-button,
+.danger-button,
 .task-actions button {
   display: inline-flex;
   align-items: center;
@@ -197,9 +199,22 @@ textarea {
   padding: 0.55rem 0.8rem;
 }
 
+.clear-button {
+  background: #172033;
+  color: #ffffff;
+  padding: 0.55rem 0.8rem;
+}
+
+.danger-button {
+  background: #b91c1c;
+  color: #ffffff;
+  padding: 0.7rem 0.95rem;
+}
+
 .filters {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) repeat(3, minmax(140px, 170px));
+  grid-template-columns: minmax(180px, 1fr) repeat(3, minmax(140px, 170px)) 92px;
+  align-items: stretch;
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
@@ -269,6 +284,32 @@ textarea {
 .priority.high {
   background: #fee2e2;
   color: #b91c1c;
+}
+
+.task-badges {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.due-badge {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.due-badge.overdue {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
+.due-badge.soon {
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .task-meta {
@@ -348,6 +389,52 @@ textarea {
   padding: 0;
 }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.52);
+  padding: 1rem;
+}
+
+.modal {
+  width: min(420px, 100%);
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #dfe6ef;
+  box-shadow: 0 24px 70px rgba(23, 32, 51, 0.28);
+  padding: 1.25rem;
+}
+
+.modal-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #b91c1c;
+  margin-bottom: 0.8rem;
+}
+
+.modal h2 {
+  margin-bottom: 0.45rem;
+}
+
+.modal p {
+  color: #4d5c70;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  margin-top: 1.1rem;
+}
+
 .spin {
   animation: spin 0.9s linear infinite;
 }
@@ -364,7 +451,7 @@ textarea {
 
 @media (max-width: 940px) {
   .dashboard {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .workspace {
@@ -401,7 +488,15 @@ textarea {
     display: grid;
   }
 
+  .task-badges {
+    justify-content: flex-start;
+  }
+
   .task-actions button {
     flex: 1 1 120px;
+  }
+
+  .modal-actions {
+    display: grid;
   }
 }
