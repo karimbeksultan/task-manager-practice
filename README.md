@@ -1,6 +1,6 @@
-# Task Manager Web Application
+# Task Manager Practice Project
 
-A simple full-stack Task Manager built for a university educational project. It demonstrates CRUD operations, REST API design, SQLite persistence, search, filters, sorting, validation, error handling, loading states, and responsive UI.
+This is a simple full-stack Task Manager web application for my university practice project. It lets users create, view, update, delete, search, filter, and sort tasks.
 
 ## Tech Stack
 
@@ -38,7 +38,7 @@ A simple full-stack Task Manager built for a university educational project. It 
 
 ## Setup Instructions
 
-Make sure Node.js and npm are installed first. You can check with:
+Make sure Node.js and npm are installed first:
 
 ```bash
 node -v
@@ -61,6 +61,14 @@ Run both backend and frontend in development mode:
 
 ```bash
 npm run dev
+```
+
+On Windows PowerShell, if `npm` is blocked by execution policy, use `npm.cmd`:
+
+```powershell
+npm.cmd run install:all
+npm.cmd run init-db --prefix backend
+npm.cmd run dev
 ```
 
 Open the frontend:
@@ -94,6 +102,8 @@ http://localhost:5173
 ```
 
 Replace `YOUR_USERNAME` and `task-manager-practice` with your real GitHub username and repository name.
+
+On Windows PowerShell, your supervisor can also use `npm.cmd` instead of `npm`.
 
 ## Backend Only
 
@@ -172,6 +182,13 @@ backend/db/tasks.sqlite
 - Empty state when no tasks exist
 - Responsive desktop and mobile layout
 - Success and error notifications
+
+## What I Learned
+
+- How to connect a React frontend to an Express backend.
+- How CRUD operations work with a REST API.
+- How to store task data in a SQLite database.
+- How to add search, filters, sorting, validation, and loading states.
 
 ## Demo Checklist
 

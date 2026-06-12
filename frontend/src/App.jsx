@@ -61,6 +61,7 @@ function getDueState(task) {
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
+  const [dashboardTasks, setDashboardTasks] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [filters, setFilters] = useState(defaultFilters);
@@ -69,16 +70,16 @@ export default function App() {
   const [notification, setNotification] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
 
-  // Dashboard values are derived from the currently displayed task list.
+  // Dashboard values are derived from all saved tasks, not only the filtered view.
   const dashboard = useMemo(() => {
     return {
-      total: tasks.length,
-      pending: tasks.filter((task) => task.status === "Pending").length,
-      inProgress: tasks.filter((task) => task.status === "In Progress").length,
-      completed: tasks.filter((task) => task.status === "Completed").length,
-      high: tasks.filter((task) => task.priority === "High").length
+      total: dashboardTasks.length,
+      pending: dashboardTasks.filter((task) => task.status === "Pending").length,
+      inProgress: dashboardTasks.filter((task) => task.status === "In Progress").length,
+      completed: dashboardTasks.filter((task) => task.status === "Completed").length,
+      high: dashboardTasks.filter((task) => task.priority === "High").length
     };
-  }, [tasks]);
+  }, [dashboardTasks]);
 
   // Reads tasks from the REST API using the current search, filter, and sort values.
   async function fetchTasks() {
@@ -89,14 +90,23 @@ export default function App() {
         if (value) params.append(key, value);
       });
 
-      const response = await fetch(`${API_URL}/tasks?${params.toString()}`);
+      const [response, dashboardResponse] = await Promise.all([
+        fetch(`${API_URL}/tasks?${params.toString()}`),
+        fetch(`${API_URL}/tasks`)
+      ]);
       const data = await response.json();
+      const dashboardData = await dashboardResponse.json();
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to load tasks.");
       }
 
+      if (!dashboardResponse.ok) {
+        throw new Error(dashboardData.error || "Failed to load dashboard.");
+      }
+
       setTasks(data);
+      setDashboardTasks(dashboardData);
     } catch (error) {
       showNotification(error.message, "error");
     } finally {
